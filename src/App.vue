@@ -1,6 +1,23 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <h1>Welcome to Your Vue.js App</h1>
+    <j-card></j-card>
   </div>
 </template>
+<script>
+import { JCard } from "@/components";
+export default {
+  components: { JCard }
+}
+</script>
+<style lang="scss" scoped>
+
+#app {
+  position: relative;
+  padding: 0;
+  margin: 0;
+  width: 100%;
+  height: 100%;
+  border: 1px solid red;
+}
+
+</style>
