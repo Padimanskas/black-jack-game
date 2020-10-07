@@ -1,7 +1,7 @@
 <template>
   <div class="j-card" v-bind:style="{ transform: ['translate(' + shoePosition.left + 'px, ' + shoePosition.top + 'px)'] }">
     <div class="j-card-back"></div>
-    <div class="j-card-front">{{ rank }} - {{ suit }} - {{ shoePosition }}</div>
+    <div class="j-card-front" v-bind:class="`${suit.toLowerCase()}-${String(rank).toLowerCase()}`"></div>
   </div>
 </template>
 
@@ -18,6 +18,10 @@ export default class JCard extends Vue {
 </script>
 
 <style lang="scss" scoped>
+
+  @function getPNGAssetByName($asset-name) {
+    @return url("./../assets/#{$asset-name}.png");
+  }
 
   @keyframes falling {
     100% {
@@ -36,8 +40,8 @@ export default class JCard extends Vue {
 
   .j-card {
     background-color: transparent;
-    width: 130px;
-    height: 200px;
+    width: 169px;
+    height: 245px;
     position: absolute;
     user-select: none;
     transform-style: preserve-3d;
@@ -53,20 +57,30 @@ export default class JCard extends Vue {
     position: absolute;
     width: 100%;
     height: 100%;
-    border-radius: 10px;
-    border: 1px solid;
   }
 
   .j-card-back {
-    background-color: blueviolet;
+    background-image: getPNGAssetByName("back");
   }
 
   .j-card-front {
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: lightslategray;
     transform: rotateY(180deg);
+    background-repeat: no-repeat;
+    background-position: center center;
+  }
+
+  $suits: diamond, heart, spade, club;
+  $ranks: 2, 3, 4, 5, 6, 7, 8, 9, 10, ace, king, queen, jack;
+
+  @each $suit in $suits {
+    @each $rank in $ranks {
+      .#{$suit}-#{$rank}  {
+        background-image: getPNGAssetByName(#{$suit}_#{$rank});
+      }
+    }
   }
 
 </style>

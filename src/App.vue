@@ -11,14 +11,14 @@ import { DEALER_DID_HIT } from "@/store/actions.type";
 export default {
   components: { BJHand, JButton, BJShoe },
 
-  data: function(): void {
+  data: function() {
     return {
       shoeTop: 0,
       shoeLeft: 0,
     }
   },
 
-  mounted(): void {
+  mounted() {
     this.$nextTick(function() {
       window.addEventListener('resize', this.getShoeLeft);
       window.addEventListener('resize', this.getShoeTop);
@@ -30,44 +30,36 @@ export default {
   },
 
   methods: {
-    getShoeLeft(): void {
+    getShoeLeft() {
       const { left } = this.$refs.shoe.$el.getBoundingClientRect();
       this.shoeLeft = left;
     },
 
-    getShoeTop(): void {
+    getShoeTop() {
       const { top } = this.$refs.shoe.$el.getBoundingClientRect();
       this.shoeTop = top;
     },
 
-    lrt: function (): void {
-      this.$store.commit(DEALER_DID_HIT, 'hello martians' + Math.random());
+    lrt: function () {
+      this.$store.commit(DEALER_DID_HIT, {suit: 'CLUB', rank: 2});
     }
   },
-  beforeDestroy(): void {
+  beforeDestroy() {
     window.removeEventListener('resize', this.getShoeLeft);
     window.removeEventListener('resize', this.getShoeTop);
   }
 }
 </script>
 <style lang="scss">
-
-body {
-  position: absolute;
-  width: 100vw;
-  height: 100vh;
-  margin: 0;
-  padding: 0;
-  border: 1px solid red;
-  box-sizing: border-box;
-}
-
 #app {
   position: absolute;
   top: 0;
   left: 0;
   bottom: 0;
   right: 0;
-  border: 1px solid green;
+  //background-image: url("./assets/bg.png");
+  background-repeat: repeat;
+  z-index: -2;
+
 }
 </style>
