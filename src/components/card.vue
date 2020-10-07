@@ -1,64 +1,38 @@
 <template>
-  <div class="card-container">
-    <div class="j-card" v-for="(card, key) in cards" v-bind:key="key" v-bind:style="{ left: key * 30 + 'px' }"
-         @click="changeCounter">
-      <div class="j-card-back"></div>
-      <div class="j-card-front"></div>
-    </div>
-    <div>{{dealerHits}}</div>
-    <div>{{playerHits}}</div>
+  <div class="j-card" v-bind:style="{ transform: ['translate(' + shoePosition.left + 'px, ' + shoePosition.top + 'px)'] }">
+    <div class="j-card-back"></div>
+    <div class="j-card-front">{{ rank }} - {{ suit }} - {{ shoePosition }}</div>
   </div>
 </template>
 
-<script>
-import Vue from 'vue';
-import { mapGetters } from 'vuex';
-import Component from 'vue-class-component';
-import { PLAYER_DID_HIT, DEALER_DID_HIT } from '@/store/actions.type';
+<script lang="ts">
+import { Component, Prop, Vue } from 'vue-property-decorator';
+import { IPosition } from "@/types/types";
 
-
-@Component({
-  computed: {
-    ...mapGetters(['dealerHits', 'playerHits'])
-  }
-})
-class JCard extends Vue {
-
-  counter = 0;
-  cards = [{prop: 'some text 1'}];
-
-  changeCounter() {
-    this.counter++;
-    this.cards.push({prop: 'some text ' + (this.counter + 1)});
-    this.$store.commit(DEALER_DID_HIT, 'hello martians' + Math.random());
-    this.$store.commit(PLAYER_DID_HIT, 'hello martians' + Math.random());
-    return false;
-  }
+@Component
+export default class JCard extends Vue {
+  @Prop() private suit!: string;
+  @Prop() private rank!: string;
+  @Prop() private shoePosition!: IPosition;
 }
-
-export default JCard;
 </script>
 
 <style lang="scss" scoped>
 
+  @keyframes falling {
+    100% {
+      transform: translateX(0);
+    }
+  }
 
-
-@keyframes falling {
-  0% {
-    transform: translateX(400px);
+  @keyframes laydown {
+    0% {
+      transform: rotateY(0deg);
+    }
+    100% {
+      transform: rotateY(180deg);
+    }
   }
-  100% {
-    transform: translateX(0);
-  }
-}
-@keyframes laydown {
-  0% {
-    transform: rotateY(0deg);
-  }
-  100% {
-    transform: rotateY(180deg);
-  }
-}
 
   .j-card {
     background-color: transparent;
@@ -88,6 +62,9 @@ export default JCard;
   }
 
   .j-card-front {
+    display: flex;
+    justify-content: center;
+    align-items: center;
     background-color: lightslategray;
     transform: rotateY(180deg);
   }

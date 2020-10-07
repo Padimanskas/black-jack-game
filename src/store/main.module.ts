@@ -1,6 +1,8 @@
+import Vuex, { StoreOptions } from 'vuex';
 import { DEALER_DID_HIT, PLAYER_DID_HIT } from './actions.type';
+import { IInitState } from '@/types/types';
 
-const initialState = {
+const initialState: IInitState = {
     hits: {
         dealer: [],
         player: []
@@ -10,10 +12,10 @@ const initialState = {
 const state = { ...initialState };
 
 const mutations = {
-    [DEALER_DID_HIT](state, value) {
-        state.hits.dealer.push({attr: value});
+    [DEALER_DID_HIT](state: IInitState, value: string) {
+        state.hits.dealer.push({rank: 2, suit: 'HEARTS'});
     },
-    [PLAYER_DID_HIT](state, value) {
+    [PLAYER_DID_HIT](state: any, value: any) {
         state.hits.player.push({attr: value});
     }
 };
