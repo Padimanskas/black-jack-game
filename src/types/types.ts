@@ -5,6 +5,7 @@ interface ICard {
     suit: TSuit;
     rank: TRank;
     shoePosition?: IPosition;
+    upsideDown?: boolean;
 }
 
 interface IInitState {
@@ -12,6 +13,10 @@ interface IInitState {
         dealer: Array<ICard>,
         player: Array<ICard>
     };
+    score: {
+        player: number;
+        dealer: number;
+    }
 }
 
 interface IPosition {
