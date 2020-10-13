@@ -8,10 +8,8 @@
 <script lang="ts">
 import { Component, Prop, Vue } from 'vue-property-decorator';
 import { IPosition } from "@/types/types";
-import Animator from "@/components/animator.vue";
-@Component({
-  components: {Animator}
-})
+
+@Component
 export default class JCard extends Vue {
   @Prop() private suit!: string;
   @Prop() private rank!: string;
@@ -59,8 +57,8 @@ export default class JCard extends Vue {
     user-select: none;
     transform-style: preserve-3d;
     animation-name: falling, laydown;
-    animation-duration: 500ms, 500ms;
-    animation-delay: 0ms, 500ms;
+    animation-duration: 300ms, 300ms;
+    animation-delay: 0ms, 300ms;
     animation-iteration-count: 1, 1;
     animation-fill-mode: forwards;
   }
@@ -73,7 +71,7 @@ export default class JCard extends Vue {
     user-select: none;
     transform-style: preserve-3d;
     animation-name: falling;
-    animation-duration: 500ms;
+    animation-duration: 300ms;
     animation-delay: 0ms;
     animation-iteration-count: 1;
     animation-fill-mode: forwards;

@@ -1,8 +1,9 @@
-export const DEALER_DID_HIT = 'dealerDidHit';
-export const PLAYER_DID_HIT = 'playerDidHit';
+export const DEALER_TURN = 'dealerTurn';
+export const PLAYER_TURN = 'playerTurn';
 export const CLEAR_HITS = 'clearHits';
 export const CLEAR_SCORE = 'clearScore';
 export const OPEN_ALL_CARDS = 'openAllCards';
-
-export const DEALER_WINS = 'dealerWins';
-export const PLAYER_WINS = 'playerWins';
+export const CHECK_SCORE = 'checkScore';
+export const NEW_DEAL = 'newDeal';
+export const CHANGE_TURN = 'changeTurn';
+export const SET_WINNER = 'setWinner';

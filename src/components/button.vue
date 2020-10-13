@@ -14,9 +14,8 @@ export default class JButton extends Vue {}
 <style lang="scss" scoped>
 
 .j-button {
-
-  margin-left: 600px;
-  border: 1px solid blue;
+width: 100px;
+  height: 40px;
 }
 
 </style>
