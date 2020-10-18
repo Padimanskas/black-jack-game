@@ -1,7 +1,7 @@
 type TSuit = 'DIAMOND' | 'HEART' | 'SPADE' | 'CLUB';
 type TRank = 2|3|4|5|6|7|8|9|10|'ACE'|'KING'|'QUEEN'|'JACK';
 type TTurn = 'player' | 'dealer';
-type TWinner = 'player' | 'dealer' | 'blackjack' | '';
+type TWinner = 'player' | 'dealer' | 'blackjack' | 'draw' | '';
 
 interface ICard {
     suit: TSuit;
@@ -20,12 +20,12 @@ interface IInitState {
         dealer: number;
     },
     turn: TTurn;
-    winner: 'dealer' | 'player' | 'blackjack' | '';
+    winner: TWinner;
 }
 
 interface IPosition {
-    top: number;
-    left: number;
+    top?: number;
+    left?: number;
 }
 
 export { IInitState, ICard, TRank, TSuit, IPosition, TTurn, TWinner };

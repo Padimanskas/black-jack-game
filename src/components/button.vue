@@ -8,7 +8,7 @@
 import { Component, Vue } from 'vue-property-decorator';
 
 @Component
-export default class JButton extends Vue {}
+export default class BJButton extends Vue {}
 </script>
 
 <style lang="scss" scoped>

@@ -1,21 +1,23 @@
 <template>
   <div id="app">
-    <b-j-hand v-bind:score="dealerScore" v-bind:cards="dealerHits" v-bind:position="{top: 100, left: 600}"
+    <b-j-hand v-bind:cards="dealerHits" v-bind:style="{ top: '100px'}"
               v-bind:shoe-position="{top: shoeTop, left: shoeLeft}"></b-j-hand>
-    <b-j-hand v-bind:score="playerScore" v-bind:cards="playerHits" v-bind:position="{top: 500, left: 600}"
+    <b-j-hand v-bind:cards="playerHits" v-bind:style="{ top: '500px'}"
               v-bind:shoe-position="{top: shoeTop, left: shoeLeft}"></b-j-hand>
     <b-j-shoe ref="shoe"></b-j-shoe>
     <div class="button-container">
-      <j-button v-if="turn === 'player' && !winner" v-on:click="hit">HIT</j-button>
-      <j-button v-if="turn === 'player' && !winner" v-on:click="stay">STAY</j-button>
-      <j-button v-on:click="newDeal">DEAL</j-button>
+      <b-j-button v-if="turn === 'player' && !winner" v-on:click="hit">HIT</b-j-button>
+      <b-j-button v-if="turn === 'player' && !winner" v-on:click="stay">STAY</b-j-button>
+      <b-j-button v-on:click="newDeal">DEAL</b-j-button>
     </div>
     <div class="turn">TURN: {{ turn }}</div>
     <div class="winner">WINNER: {{ winner }}</div>
+    <div class="winner">PLAYER SCORE: {{ playerScore }}</div>
+    <div class="winner">DEALER SCORE: {{ dealerScore }}</div>
   </div>
 </template>
 <script>
-import {JButton, BJHand, BJShoe} from "@/components";
+import {BJButton, BJHand, BJShoe} from "@/components";
 import {
   NEW_DEAL,
   PLAYER_TURN,
@@ -24,7 +26,7 @@ import {
 import {mapGetters} from "vuex";
 
 export default {
-  components: {BJHand, JButton, BJShoe},
+  components: {BJHand, BJButton, BJShoe},
 
   computed: {
     ...mapGetters(['dealerHits', 'playerHits', 'playerScore', 'dealerScore', 'turn', 'winner'])
@@ -39,8 +41,8 @@ export default {
 
   mounted() {
     this.$nextTick(function () {
-      window.addEventListener('resize', this.getShoeLeft);
-      window.addEventListener('resize', this.getShoeTop);
+      addEventListener('resize', this.getShoeLeft);
+      addEventListener('resize', this.getShoeTop);
       this.getShoeLeft();
       this.getShoeTop();
     });
@@ -72,8 +74,8 @@ export default {
     }
   },
   beforeDestroy() {
-    window.removeEventListener('resize', this.getShoeLeft);
-    window.removeEventListener('resize', this.getShoeTop);
+    removeEventListener('resize', this.getShoeLeft);
+    removeEventListener('resize', this.getShoeTop);
   }
 }
 </script>

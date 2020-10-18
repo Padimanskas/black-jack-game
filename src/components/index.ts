@@ -1,6 +1,6 @@
-import JCard from './card.vue';
-import JButton from './button.vue';
+import BJCard from './card.vue';
+import BJButton from './button.vue';
 import BJHand from './hand.vue';
 import BJShoe from './shoe.vue';
 
-export { JCard, JButton, BJHand, BJShoe };
+export { BJCard, BJButton, BJHand, BJShoe };

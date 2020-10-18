@@ -1,50 +1,60 @@
 <template>
-  <div class="card-container" v-bind:style="{ top: position.top + 'px', left: position.left + 'px' }">
-    <j-card v-for="(card, key) in cards" v-bind:key="key" v-bind:style="{ marginLeft: `${key * 30}px` }" v-bind:rank="card.rank"
-            v-bind:suit="card.suit" v-bind:shoe-position="{ top: shoePosition.top - position.top, left: shoePosition.left - position.left - key * 30 }"
-    v-bind:upside-down="card.upsideDown"></j-card>
-    <p class="score">{{name}} score: {{ score }}</p>
+  <div ref="cardContainer" class="card-container">
+    <b-j-card v-for="(card, key) in cards" v-bind:key="key" v-bind:style="{ marginLeft: `${key * 30}px` }"
+            v-bind:rank="card.rank"
+            v-bind:suit="card.suit"
+            v-bind:shoe-position="{ top: shoePosition.top - handTop, left: shoePosition.left - handLeft - key * 30 }"
+            v-bind:upside-down="card.upsideDown"></b-j-card>
   </div>
 </template>
 
 <script lang="ts">
-import { Component, Prop, Vue } from 'vue-property-decorator';
-import { JCard } from '@/components';
-import { ICard, IPosition } from '@/types/types';
+import {Component, Prop, Vue} from 'vue-property-decorator';
+import {BJCard} from '@/components';
+import {ICard, IPosition} from '@/types/types';
 
 @Component({
   components: {
-    JCard
+    BJCard
   }
 })
 export default class BJHand extends Vue {
   @Prop() private cards!: ICard[];
   @Prop() private position!: IPosition;
   @Prop() private shoePosition!: IPosition;
-  @Prop() private score!: string;
-  @Prop() private name!: string;
+
+  handTop = 0;
+  handLeft = 0;
+
+  mounted(): void {
+
+    this.$nextTick(function () {
+      window.addEventListener('resize', this.getHandLeft);
+      window.addEventListener('resize', this.getHandTop);
+      this.getHandLeft();
+      this.getHandTop();
+    });
+
+    const {top, left} = this.$el.getBoundingClientRect();
+
+    this.handTop = top;
+    this.handLeft = left;
+  }
+
+  getHandLeft(): void {
+    this.handLeft = this.$el.getBoundingClientRect()['left'];
+  }
+
+  getHandTop(): void {
+    this.handTop = this.$el.getBoundingClientRect()['top'];
+  }
 }
 </script>
 
 <style lang="scss" scoped>
-
-  .card-container {
-    position: absolute;
-    border: 5px solid gold;
-    border-radius: 10px;
-    width: 180px;
-    height: 260px;
-    padding-top: 10px;
-    padding-left: 10px;
-
-    .score {
-      margin-left: 300px;
-      color: #fff;
-      font-size: 30pt;
-      font-family: Arial, Tahoma, Verdana, Sans-serif;
-    }
-  }
-
-
-
+.card-container {
+  position: absolute;
+  right: 70%;
+  transform: translateX(-70%);
+}
 </style>

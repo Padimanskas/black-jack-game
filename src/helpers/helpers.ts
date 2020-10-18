@@ -1,5 +1,6 @@
 import {CARD_RANKS} from "@/const/const";
 import {ICard, IInitState, TWinner} from "@/types/types";
+import {DEALER_TURN} from "@/store/actions.type";
 
 export const getRandomRank = (ranks: { [key in keyof typeof CARD_RANKS]: { name: string; value: number; } }): { name: string; value: number; } => {
     const keys = Object.keys(ranks);
@@ -42,6 +43,15 @@ export const checkScore = (state: IInitState): TWinner => {
     if(turn === 'dealer' && score.dealer < score.player) {
         return 'player';
     }
+    if(turn === 'dealer' && score.dealer === score.player) {
+        return 'draw';
+    }
 
     return '';
+}
+
+export function promiseGenerator(callback: () => void, time: number): Promise<string | unknown> {
+    return new Promise(((resolve, reject) => {
+        setTimeout(callback, time);
+    }));
 }

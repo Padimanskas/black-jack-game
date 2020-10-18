@@ -10,7 +10,7 @@ import {
     SET_WINNER
 } from './actions.type';
 import {ICard, IInitState, TTurn, TWinner} from '@/types/types';
-import {checkScore, getCardValueByRank, getRandomRank, getRandomSuit} from "@/handlers/helpers";
+import {checkScore, getCardValueByRank, getRandomRank, getRandomSuit, promiseGenerator} from "@/helpers/helpers";
 import {CARD_RANKS, CARD_SUITS} from "@/const/const";
 
 const initialState: IInitState = {
@@ -97,22 +97,11 @@ const actions = {
         dispatch(CHECK_SCORE);
     },
     [NEW_DEAL]({commit}) {
-        const promises = [new Promise((resolve, reject) => {
-            commit(CHANGE_TURN, 'dealer');
-            setTimeout(() => commit(PLAYER_TURN, {}), 0);
-        }),
-            new Promise(((resolve, reject) => {
-                setTimeout(() => commit(DEALER_TURN, {}), 300);
-            })),
-            new Promise(((resolve, reject) => {
-                setTimeout(() => commit(PLAYER_TURN, {}), 600);
-            })),
-            new Promise(((resolve, reject) => {
-                setTimeout(() => commit(DEALER_TURN, {upsideDown: true}), 900);
-            })),
-            new Promise(((resolve, reject) => {
-                setTimeout(() => commit(CHANGE_TURN, 'player'), 1300);
-            })),
+        const promises = [
+            promiseGenerator(() => commit(PLAYER_TURN, {}), 0),
+            promiseGenerator(() => commit(DEALER_TURN, {}), 300),
+            promiseGenerator(() => commit(PLAYER_TURN, {}), 600),
+            promiseGenerator(() => commit(DEALER_TURN, {upsideDown: true}), 900)
         ];
 
         commit(SET_WINNER, '');
