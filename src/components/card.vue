@@ -28,6 +28,16 @@ export default class BJCard extends Vue {
   $suits: diamond, heart, spade, club;
   $ranks: 2, 3, 4, 5, 6, 7, 8, 9, 10, ace, king, queen, jack;
 
+  @mixin card {
+    background-color: transparent;
+    width: 169px;
+    height: 245px;
+    position: absolute;
+    user-select: none;
+    transform-style: preserve-3d;
+    animation-fill-mode: forwards;
+  }
+
   @function getPNGAssetByName($asset-name) {
     @return url("./../assets/#{$asset-name}.png");
   }
@@ -53,16 +63,6 @@ export default class BJCard extends Vue {
     100% {
       transform: rotateY(180deg);
     }
-  }
-
-  @mixin card {
-    background-color: transparent;
-    width: 169px;
-    height: 245px;
-    position: absolute;
-    user-select: none;
-    transform-style: preserve-3d;
-    animation-fill-mode: forwards;
   }
 
   .j-card-with-open-animation {

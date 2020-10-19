@@ -1,6 +1,5 @@
 import {CARD_RANKS} from "@/const/const";
-import {ICard, IInitState, TWinner} from "@/types/types";
-import {DEALER_TURN} from "@/store/actions.type";
+import {ICard, IInitState, EWinner, ETurn} from "@/types/types";
 
 export const getRandomRank = (ranks: { [key in keyof typeof CARD_RANKS]: { name: string; value: number; } }): { name: string; value: number; } => {
     const keys = Object.keys(ranks);
@@ -20,34 +19,33 @@ export const getCardValueByRank = (card: ICard): number => {
     }, 0);
 }
 
-export const checkScore = (state: IInitState): TWinner => {
+export const checkScore = (state: IInitState): EWinner => {
 
     const {turn, score} = state;
 
-    if(turn === 'player' && score.player > 21) {
-        return 'dealer';
+    if(turn === ETurn.player && score.player > 21) {
+        return EWinner.dealer;
     }
-    if(turn === 'dealer' && score.dealer > 21) {
-        return 'player';
+    if(turn === ETurn.dealer && score.dealer > 21) {
+        return EWinner.player;
     }
-    if(turn === 'player' && score.player === 21) {
-        return 'player';
+    if(turn === ETurn.player && score.player === 21) {
+        return EWinner.player;
     }
-    if(turn === 'dealer' && score.dealer === 21) {
-        return 'blackjack';
+    if(turn === ETurn.dealer && score.dealer === 21) {
+        return EWinner.blackjack;
     }
-    if(turn === 'dealer' && score.dealer > score.player) {
-        console.log('dealer wins');
-        return 'dealer';
+    if(turn === ETurn.dealer && score.dealer > score.player) {
+        return EWinner.dealer;
     }
-    if(turn === 'dealer' && score.dealer < score.player) {
-        return 'player';
+    if(turn === ETurn.dealer && score.dealer < score.player) {
+        return EWinner.player;
     }
-    if(turn === 'dealer' && score.dealer === score.player) {
-        return 'draw';
+    if(turn === ETurn.dealer && score.dealer === score.player) {
+        return EWinner.draw;
     }
 
-    return '';
+    return EWinner.none;
 }
 
 export function promiseGenerator(callback: () => void, time: number): Promise<string | unknown> {
